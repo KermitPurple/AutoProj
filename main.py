@@ -1,4 +1,4 @@
-from os import system
+from os import system, chdir
 from msvcrt import getch
 
 def YesOrNo():
@@ -30,33 +30,38 @@ def makeNew():
             break
         except:
             print("enter valid number")
+    name = input("Enter Name: ")
     if choice == 1:
-        makeNewC()
+        makeNewC(name)
     elif choice == 2:
-        makeNewPython()
+        makeNewPython(name)
     elif choice == 3:
-        makeNewJava()
+        makeNewJava(name)
     elif choice == 4:
-        makeNewWeb()
+        makeNewWeb(name)
     elif choice == 5:
-        makeNewRust()
+        makeNewRust(name)
 
-def makeNewC():
+def makeNewC(name):
     pass
 
-def makeNewPython():
+def makeNewPython(name):
+    path = "C:\\users\\shane\\dropbox\\desktop\\coding\\python\\"+name
+    system("md "+path)
+    chdir(path)
+    system("gvim main.py")
+    system("start cmd")
+
+def makeNewJava(name):
     pass
 
-def makeNewJava():
+def makeNewWeb(name):
     pass
 
-def makeNewWeb():
+def makeNewrust(name):
     pass
 
-def makeNewrust():
-    pass
-
-def makeNewRust():
+def makeNewRust(name):
     pass
 
 makeNew()
