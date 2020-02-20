@@ -1,6 +1,20 @@
 from os import system
 from msvcrt import getch
 
+def YesOrNo():
+    print("(Y/N)")
+    while 1:
+        try:
+            choice = getch().decode("utf-8").lower()
+            if choice == 'y':
+                return True
+            elif choice == 'n':
+                return False
+            else:
+                raise
+        except:
+            print("Please Enter y or n")
+
 def makeNew():
     print("1) New C++ Project")
     print("2) New Python Project")
