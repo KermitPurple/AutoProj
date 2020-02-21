@@ -73,9 +73,6 @@ def makeNewJava(name):
 def makeNewWeb(name):
     pass
 
-def makeNewrust(name):
-    pass
-
 def makeNewRust(name):
     pass
 
