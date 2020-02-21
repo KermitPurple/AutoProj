@@ -30,20 +30,29 @@ def makeNew():
             break
         except:
             print("enter valid number")
-    name = input("Enter Name: ")
-    if choice == 1:
-        makeNewC(name)
-    elif choice == 2:
-        makeNewPython(name)
-    elif choice == 3:
-        makeNewJava(name)
-    elif choice == 4:
-        makeNewWeb(name)
-    elif choice == 5:
-        makeNewRust(name)
+    if choice != 6:
+        name = input("Enter Name: ")
+        if choice == 1:
+            makeNewC(name)
+        elif choice == 2:
+            makeNewPython(name)
+        elif choice == 3:
+            makeNewJava(name)
+        elif choice == 4:
+            makeNewWeb(name)
+        elif choice == 5:
+            makeNewRust(name)
 
 def makeNewC(name):
-    pass
+    path = "C:\\users\\shane\\dropbox\\desktop\\coding\\c++\\"+name
+    system("md "+path)
+    chdir(path)
+    system("cp -r \"C:\\users\\shane\\dropbox\\desktop\\coding\\defaults\\c++\\makefile\" .")
+    system("cp -r \"C:\\users\\shane\\dropbox\\desktop\\coding\\defaults\\c++\\src\" .")
+    system("cp -r \"C:\\users\\shane\\dropbox\\desktop\\coding\\defaults\\c++\\bin\" .")
+    system("cp -r \"C:\\users\\shane\\dropbox\\desktop\\coding\\defaults\\c++\\include\" .")
+    system("gvim src\\main.cpp")
+    system("start cmd")
 
 def makeNewPython(name):
     path = "C:\\users\\shane\\dropbox\\desktop\\coding\\python\\"+name
