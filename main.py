@@ -44,8 +44,14 @@ def makeNew():
             makeNewRust(name)
 
 def makeNewC(name):
-    path = "C:\\users\\shane\\dropbox\\desktop\\coding\\c++\\"+name
-    system("md "+path)
+    print("Is this a personal project", end="")
+    personal = YesOrNo()
+    path = ""
+    if personal:
+        path = "C:\\users\\shane\\dropbox\\desktop\\coding\\c++\\"+name
+    else:
+        path = "C:\\users\\shane\\dropbox\\desktop\\school\\senior year\\semester 2\\cs\\"+name
+    system("md " + "\"" + path + "\"")
     chdir(path)
     system("cp -r \"C:\\users\\shane\\dropbox\\desktop\\coding\\defaults\\c++\\makefile\" .")
     system("cp -r \"C:\\users\\shane\\dropbox\\desktop\\coding\\defaults\\c++\\src\" .")
