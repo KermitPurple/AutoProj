@@ -61,7 +61,12 @@ def makeNewC(name):
     system("start cmd")
 
 def makeNewPython(name):
-    path = "C:\\users\\shane\\dropbox\\desktop\\coding\\python\\"+name
+    print("Is this a discord bot?", end="")
+    bot = YesOrNo()
+    if bot:
+        path = "C:\\users\\shane\\dropbox\\desktop\\coding\\python\\discordbots\\"+name
+    else:
+        path = "C:\\users\\shane\\dropbox\\desktop\\coding\\python\\"+name
     system("md "+path)
     chdir(path)
     system("gvim main.py")
