@@ -73,12 +73,12 @@ def makeNewPython(name):
     system("start cmd")
 
 def makeNewJava(name):
-    pass
+    print("not implimented yet")
 
 def makeNewWeb(name):
-    pass
+    print("not implimented yet")
 
 def makeNewRust(name):
-    pass
+    print("not implimented yet")
 
 makeNew()
