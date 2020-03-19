@@ -76,7 +76,19 @@ def makeNewJava(name):
     print("not implimented yet")
 
 def makeNewWeb(name):
-    print("not implimented yet")
+    print("Is this plain javascript", end="")
+    bot = YesOrNo()
+    if bot:
+        path = "C:\\users\\shane\\dropbox\\desktop\\coding\\web\\JustJS\\"+name
+    else:
+        path = "C:\\users\\shane\\dropbox\\desktop\\coding\\web\\"+name
+    system("md "+path)
+    chdir(path)
+    system("cp C:\\Users\\Shane\\Dropbox\\Desktop\\Coding\\defaults\\web\\index.html .")
+    system("touch styles.css")
+    system("touch script.js")
+    system("gedit")
+    system("start cmd")
 
 def makeNewRust(name):
     print("not implimented yet")
