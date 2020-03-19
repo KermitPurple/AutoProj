@@ -86,7 +86,7 @@ def makeNewWeb(name):
     chdir(path)
     system("cp C:\\Users\\Shane\\Dropbox\\Desktop\\Coding\\defaults\\web\\index.html .")
     system("touch styles.css")
-    system("touch script.js")
+    system("touch sketch.js")
     system("gedit")
     system("start cmd")
 
