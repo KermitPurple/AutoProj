@@ -57,8 +57,7 @@ def makeNewC(name):
     system("cp -r \"C:\\users\\shane\\dropbox\\desktop\\coding\\defaults\\c++\\src\" .")
     system("cp -r \"C:\\users\\shane\\dropbox\\desktop\\coding\\defaults\\c++\\bin\" .")
     system("cp -r \"C:\\users\\shane\\dropbox\\desktop\\coding\\defaults\\c++\\include\" .")
-    system("gvim src\\main.cpp")
-    system("start cmd")
+    system("g src\\main.cpp")
 
 def makeNewPython(name):
     print("Is this a discord bot?", end="")
@@ -69,8 +68,7 @@ def makeNewPython(name):
         path = "C:\\users\\shane\\dropbox\\desktop\\coding\\python\\"+name
     system("md "+path)
     chdir(path)
-    system("gvim main.py")
-    system("start cmd")
+    system("g main.py")
 
 def makeNewJava(name):
     print("not implimented yet")
@@ -87,8 +85,7 @@ def makeNewWeb(name):
     system("cp C:\\Users\\Shane\\Dropbox\\Desktop\\Coding\\defaults\\web\\index.html .")
     system("touch styles.css")
     system("touch sketch.js")
-    system("gedit")
-    system("start cmd")
+    system("gexit")
 
 def makeNewRust(name):
     print("not implimented yet")
