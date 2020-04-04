@@ -1,5 +1,6 @@
 from os import system, chdir
 from msvcrt import getch
+from sys import argv
 
 def YesOrNo():
     print("(Y/N)")
@@ -90,4 +91,5 @@ def makeNewWeb(name):
 def makeNewRust(name):
     print("not implimented yet")
 
-makeNew()
+if(__name__ == "__main__"):
+        makeNew()
