@@ -58,7 +58,7 @@ def makeNewC(name):
     system("cp -r \"C:\\users\\shane\\dropbox\\desktop\\coding\\defaults\\c++\\src\" .")
     system("cp -r \"C:\\users\\shane\\dropbox\\desktop\\coding\\defaults\\c++\\bin\" .")
     system("cp -r \"C:\\users\\shane\\dropbox\\desktop\\coding\\defaults\\c++\\include\" .")
-    system("g src\\main.cpp")
+    system("gvim src\\main.cpp")
 
 def makeNewPython(name):
     print("Is this a discord bot?", end="")
@@ -69,7 +69,7 @@ def makeNewPython(name):
         path = "C:\\users\\shane\\dropbox\\desktop\\coding\\python\\"+name
     system("md "+path)
     chdir(path)
-    system("g main.py")
+    system("gvim main.py")
 
 def makeNewJava(name):
     print("not implimented yet")
@@ -86,10 +86,39 @@ def makeNewWeb(name):
     system("cp C:\\Users\\Shane\\Dropbox\\Desktop\\Coding\\defaults\\web\\index.html .")
     system("touch styles.css")
     system("touch sketch.js")
-    system("gexit")
+    system("gvim")
 
 def makeNewRust(name):
     print("not implimented yet")
 
-if(__name__ == "__main__"):
+def parseArgv():
+    try:
+        projType, projName = argv[1:3]
+    except:
+        projType = argv[1]
+        projName = input("Enter Name: ")
+    cppList = ['c', 'cpp', 'c++']
+    pythonList = ['p', 'py', 'pyth', 'python']
+    javaList = ['j', 'jv', 'java']
+    webList = ['w', 'web', 'html', 'css', 'js', 'javascript']
+    rustList = ['r', 'rs', 'rust']
+    if projType.lower() in cppList:
+        makeNewC(projName)
+    elif projType.lower() in pythonList:
+        makeNewPython(projName)
+    elif projType.lower() in javaList:
+        makeNewJava(projName)
+    elif projType.lower() in webList:
+        makeNewWeb(projName)
+    elif projType.lower() in rustList:
+        makeNewRust(projName)
+    else:
+        print("ERROR: A project type with that name does not exist")
+
+
+if (__name__ == "__main__"):
+    if(len(argv) < 2):
         makeNew()
+    else:
+        parseArgv()
+
