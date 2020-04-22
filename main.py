@@ -3,9 +3,9 @@ from msvcrt import getch
 from sys import argv
 
 def YesOrNo():
-	print("(Y/N)")
-	while 1:
-            try:
+    print("(Y/N)")
+    while 1:
+        try:
             choice = getch().decode("utf-8").lower()
             if choice == 'y':
                 return True
