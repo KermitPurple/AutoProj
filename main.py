@@ -83,10 +83,10 @@ def makeNewWeb(name):
         path = "C:\\users\\shane\\dropbox\\desktop\\coding\\web\\"+name
     system("md "+path)
     chdir(path)
-    system("cp C:\\Users\\Shane\\Dropbox\\Desktop\\Coding\\defaults\\web\\index.html .")
     if bot:
         system("gvim sketch.js")
     else:
+        system("cp C:\\Users\\Shane\\Dropbox\\Desktop\\Coding\\defaults\\web\\index.html .")
         system("touch styles.css")
         system("touch sketch.js")
         system("gexit")
