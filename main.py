@@ -2,6 +2,8 @@ from os import system, chdir
 from msvcrt import getch
 from sys import argv
 
+CODING_PATH = "C:\\users\\shane\\dropbox\\desktop\\coding\\"
+
 def YesOrNo():
     print("(Y/N)")
     while 1:
@@ -49,24 +51,24 @@ def makeNewC(name):
     personal = YesOrNo()
     path = ""
     if personal:
-        path = "C:\\users\\shane\\dropbox\\desktop\\coding\\c++\\"+name
+        path = CODING_PATH + "c++\\"+name
     else:
         path = "C:\\users\\shane\\dropbox\\desktop\\school\\senior year\\semester 2\\cs\\"+name
     system("md " + "\"" + path + "\"")
     chdir(path)
-    system("cp -r \"C:\\users\\shane\\dropbox\\desktop\\coding\\defaults\\c++\\makefile\" .")
-    system("cp -r \"C:\\users\\shane\\dropbox\\desktop\\coding\\defaults\\c++\\src\" .")
-    system("cp -r \"C:\\users\\shane\\dropbox\\desktop\\coding\\defaults\\c++\\bin\" .")
-    system("cp -r \"C:\\users\\shane\\dropbox\\desktop\\coding\\defaults\\c++\\include\" .")
+    system("cp -r \"" + CODING_PATH +"defaults\\c++\\makefile\" .")
+    system("cp -r \"" + CODING_PATH +"defaults\\c++\\src\" .")
+    system("cp -r \"" + CODING_PATH +"defaults\\c++\\bin\" .")
+    system("cp -r \"" + CODING_PATH +"defaults\\c++\\include\" .")
     system("gvim src\\main.cpp")
 
 def makeNewPython(name):
     print("Is this a discord bot?", end="")
     bot = YesOrNo()
+    path = CODING_PATH + "python\\"
     if bot:
-        path = "C:\\users\\shane\\dropbox\\desktop\\coding\\python\\discordbots\\"+name
-    else:
-        path = "C:\\users\\shane\\dropbox\\desktop\\coding\\python\\"+name
+        path += "discordbots\\"
+    path += name
     system("md "+path)
     chdir(path)
     system("gvim main.py")
@@ -76,17 +78,17 @@ def makeNewJava(name):
 
 def makeNewWeb(name):
     print("Is this plain javascript", end="")
-    bot = YesOrNo()
-    if bot:
-        path = "C:\\users\\shane\\dropbox\\desktop\\coding\\web\\JustJS\\"+name
-    else:
-        path = "C:\\users\\shane\\dropbox\\desktop\\coding\\web\\"+name
+    PlainJS = YesOrNo()
+    path = CODING_PATH + "web\\"
+    if PlainJS:
+        path += "JustJS\\"
+    path += name
     system("md "+path)
     chdir(path)
-    if bot:
+    if PlainJS:
         system("gvim sketch.js")
     else:
-        system("cp C:\\Users\\Shane\\Dropbox\\Desktop\\Coding\\defaults\\web\\index.html .")
+        system("cp " + CODING_PATH + "defaults\\web\\index.html .")
         system("touch styles.css")
         system("touch sketch.js")
         system("gexit")
