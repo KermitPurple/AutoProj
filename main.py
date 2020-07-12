@@ -94,7 +94,11 @@ def makeNewWeb(name):
         system("gexit")
 
 def makeNewRust(name):
-    print("not implimented yet")
+    path = CODING_PATH + "rust\\"
+    chdir(path)
+    system("cargo new " + name)
+    chdir(path + name)
+    system("gvim src/main.rs")
 
 def parseArgv():
     try:
