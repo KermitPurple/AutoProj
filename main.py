@@ -89,6 +89,7 @@ def makeNewWeb(name):
         system("gvim sketch.js")
     else:
         system("cp " + CODING_PATH + "defaults\\web\\index.html .")
+        system("chmod 777 index.html");
         system("touch styles.css")
         system("touch sketch.js")
         system("gexit")
