@@ -53,7 +53,7 @@ def makeNewC(name):
     if personal:
         path = CODING_PATH + "c++\\"+name
     else:
-        path = "C:\\users\\shane\\dropbox\\desktop\\school\\senior year\\semester 2\\cs\\"+name
+        path = "C:\\users\\shane\\dropbox\\desktop\\school\\fall2020\\cs\\"+name
     system("md " + "\"" + path + "\"")
     chdir(path)
     system("cp -r \"" + CODING_PATH +"defaults\\c++\\makefile\" .")
