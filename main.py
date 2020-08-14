@@ -2,7 +2,7 @@ from os import system, chdir
 from msvcrt import getch
 from sys import argv
 
-CODING_PATH = "C:\\users\\shane\\dropbox\\desktop\\coding\\"
+CODING_PATH = "C:\\users\\shane\\desktop\\coding\\"
 
 def YesOrNo():
     print("(Y/N)")
@@ -53,7 +53,7 @@ def makeNewC(name):
     if personal:
         path = CODING_PATH + "c++\\"+name
     else:
-        path = "C:\\users\\shane\\dropbox\\desktop\\school\\fall2020\\cs\\"+name
+        path = "C:\\users\\shane\\dropbox\\school\\fall2020\\cs\\"+name
     system("md " + "\"" + path + "\"")
     chdir(path)
     system("cp -r \"" + CODING_PATH +"defaults\\c++\\makefile\" .")
