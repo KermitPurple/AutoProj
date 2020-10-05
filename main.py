@@ -60,7 +60,7 @@ def makeNewC(name):
     system("cp -r \"" + CODING_PATH +"defaults\\c++\\src\" .")
     system("cp -r \"" + CODING_PATH +"defaults\\c++\\bin\" .")
     system("cp -r \"" + CODING_PATH +"defaults\\c++\\include\" .")
-    system("gvim src\\main.cpp")
+    system("start gvim src\\main.cpp")
 
 def makeNewPython(name):
     print("Is this a discord bot?", end="")
@@ -71,7 +71,7 @@ def makeNewPython(name):
     path += name
     system("md "+path)
     chdir(path)
-    system("gvim main.py")
+    system("start gvim main.py")
 
 def makeNewJava(name):
     print("not implimented yet")
@@ -86,7 +86,7 @@ def makeNewWeb(name):
     system("md "+path)
     chdir(path)
     if PlainJS:
-        system("gvim sketch.js")
+        system("start gvim sketch.js")
     else:
         system("cp " + CODING_PATH + "defaults\\web\\index.html .")
         system("chmod 777 index.html");
@@ -99,7 +99,7 @@ def makeNewRust(name):
     chdir(path)
     system("cargo new " + name)
     chdir(path + name)
-    system("gvim src/main.rs")
+    system("start gvim src/main.rs")
 
 def parseArgv():
     try:
