@@ -60,7 +60,7 @@ def makeNewC(name):
     system("cp -r \"" + CODING_PATH +"defaults\\c++\\src\" .")
     system("cp -r \"" + CODING_PATH +"defaults\\c++\\bin\" .")
     system("cp -r \"" + CODING_PATH +"defaults\\c++\\include\" .")
-    system("start gvim src\\main.cpp")
+    system("start gvim -O makefile src\\main.cpp")
 
 def makeNewPython(name):
     print("Is this a discord bot?", end="")
