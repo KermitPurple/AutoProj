@@ -56,10 +56,10 @@ def makeNewC(name):
         path = "C:\\users\\shane\\dropbox\\school\\fall2020\\cs\\"+name
     system("md " + "\"" + path + "\"")
     chdir(path)
-    system("cp -r \"" + CODING_PATH +"defaults\\c++\\makefile\" .")
-    system("cp -r \"" + CODING_PATH +"defaults\\c++\\src\" .")
-    system("cp -r \"" + CODING_PATH +"defaults\\c++\\bin\" .")
-    system("cp -r \"" + CODING_PATH +"defaults\\c++\\include\" .")
+    system("cp -r \"" + CODING_PATH +"python\\autoproj\\defaults\\c++\\makefile\" .")
+    system("cp -r \"" + CODING_PATH +"python\\autoproj\\defaults\\c++\\src\" .")
+    system("cp -r \"" + CODING_PATH +"python\\autoproj\\defaults\\c++\\bin\" .")
+    system("cp -r \"" + CODING_PATH +"python\\autoproj\\defaults\\c++\\include\" .")
     system("start gvim -O makefile src\\main.cpp")
 
 def makeNewPython(name):
@@ -88,7 +88,7 @@ def makeNewWeb(name):
     if PlainJS:
         system("start gvim sketch.js")
     else:
-        system("cp " + CODING_PATH + "defaults\\web\\index.html .")
+        system("cp " + CODING_PATH + "python\\autoproj\\defaults\\web\\index.html .")
         system("chmod 777 index.html");
         system("touch styles.css")
         system("touch sketch.js")
