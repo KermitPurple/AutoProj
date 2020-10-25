@@ -1,5 +1,5 @@
 # Last updated 2020-10-24 by Shane McDonough
-CC = gcc# the compiler, either gcc or g++ usually
+CC = g++# the compiler, either gcc or g++ usually
 ifeq ($(CC), g++)# if compiler is gcc
 	EXTENSION = .cpp# set main file extension to cpp
 else#if compiler is not gcc, so probably g++ because those are the only ones I use
