@@ -60,6 +60,7 @@ def makeNewC(name):
     system("cp -r \"" + CODING_PATH +"python\\autoproj\\defaults\\c++\\src\" .")
     system("cp -r \"" + CODING_PATH +"python\\autoproj\\defaults\\c++\\bin\" .")
     system("cp -r \"" + CODING_PATH +"python\\autoproj\\defaults\\c++\\include\" .")
+    system("cp -r \"" + CODING_PATH +"python\\autoproj\\defaults\\c++\\.ycm_extra_conf.py\" .")
     system("start gvim -O makefile src\\main.cpp")
 
 def makeNewPython(name):
