@@ -27,9 +27,6 @@ bin/%.o: src/%$(EXTENSION)# create object file for %
 clean:# remove contents of bin
 	rm bin/*
 
-db:# use compiledb to build compile_commands.json for use in ycm
-	compiledb make
-
 new:# create folder bin
 	mkdir bin
 
