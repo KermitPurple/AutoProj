@@ -17,7 +17,7 @@ OBJECTS = $(patsubst src/%$(EXTENSION),bin/%.o,$(wildcard src/*$(EXTENSION)))# i
 # patsub replaces the src and the extension
 # e.g. bin/main.o bin/File1/.o
 
-all: $(OBJECTS)# compile everything
+all: bin $(OBJECTS)# compile everything
 	$(CC) bin/*.o -o bin/test.exe $(INCLUDE) $(LIBS)
 	@echo
 	
@@ -25,9 +25,9 @@ bin/%.o: src/%$(EXTENSION)# create object file for %
 	$(CC) $< $(CFLAGS) -o $@ $(INCLUDE) $(LIBS)
 
 clean:# remove contents of bin
-	rm bin/*
+	rm -rf bin
 
-new:# create folder bin
+bin:# create folder bin
 	mkdir bin
 
 test: all# compile everything then run executible
