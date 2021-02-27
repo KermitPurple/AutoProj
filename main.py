@@ -89,8 +89,8 @@ def makeNewWeb(name):
     else:
         system("cp " + CODING_PATH + "python\\autoproj\\defaults\\web\\index.html .")
         system("chmod 777 index.html");
-        system("touch styles.css")
-        system("touch sketch.js")
+        system("touch index.css")
+        system("touch index.js")
         system("gexit")
 
 def makeNewRust(name):
