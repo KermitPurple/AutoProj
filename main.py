@@ -91,14 +91,14 @@ def makeNewWeb(name):
         system("chmod 777 index.html");
         system("touch index.css")
         system("touch index.js")
-        system("gexit")
+        system("g * -O")
 
 def makeNewRust(name):
     path = CODING_PATH + "rust\\"
     chdir(path)
     system("cargo new " + name)
     chdir(path + name)
-    system("start gvim src/main.rs")
+    system("start gvim Cargo.toml src/main.rs -O")
 
 def parseArgv():
     try:
