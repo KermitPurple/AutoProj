@@ -73,7 +73,15 @@ def makeNewPython(name):
     system("start gvim main.py")
 
 def makeNewJava(name):
-    print("not implimented yet")
+    path = CODING_PATH + "java\\"
+    print("Is this for school?")
+    if YesOrNo():
+        path = "C:\\users\\shane\\dropbox\\school\\fall2021\\"
+    path += name
+    system("md " + path)
+    system("cp -r \"" + CODING_PATH + "python\\autoproj\\defaults\\java\\makefile\" .")
+    system("cp -r \"" + CODING_PATH + "python\\autoproj\\defaults\\java\\Main.java\" .")
+
 
 def makeNewWeb(name):
     print("Is this plain javascript", end="")
