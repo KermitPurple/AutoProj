@@ -76,11 +76,13 @@ def makeNewJava(name):
     path = CODING_PATH + "java\\"
     print("Is this for school?")
     if YesOrNo():
-        path = "C:\\users\\shane\\dropbox\\school\\fall2021\\"
+        path = "C:\\users\\shane\\dropbox\\school\\fall2021\\comp\\"
     path += name
     system("md " + path)
+    chdir(path)
     system("cp -r \"" + CODING_PATH + "python\\autoproj\\defaults\\java\\makefile\" .")
     system("cp -r \"" + CODING_PATH + "python\\autoproj\\defaults\\java\\Main.java\" .")
+    system("g * -O")
 
 
 def makeNewWeb(name):
