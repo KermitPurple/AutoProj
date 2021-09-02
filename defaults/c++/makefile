@@ -1,10 +1,6 @@
 # Last updated 2020-10-24 by Shane McDonough
-CC = g++# the compiler, either gcc or g++ usually
-ifeq ($(CC), g++)# if compiler is gcc
-	EXTENSION = .cpp# set main file extension to cpp
-else#if compiler is not gcc, so probably g++ because those are the only ones I use
-	EXTENSION = .c# set main file extension to c
-endif
+CC = clang++#compiler
+EXTENSION = .cpp#c++ extension
 CFLAGS = -c -Wall# -c compile and assemble do not link, -Wall turns warnings on
 INCLUDE = -Iinclude# folders to be included, anything following -I is the directory the compiler can now see
 LIBS =# libs to be included, anything following -l is a library that is included
