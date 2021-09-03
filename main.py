@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-from os import system, chdir, path
+from os import system, chdir, path, mkdir
 from sys import argv
 
 CODING_PATH = "/Users/shane/coding/"
 SCHOOL_PATH = "/Users/shane/dropbox/school/fall2021/"
+DEFAULTS_PATH = CODING_PATH + 'python/AutoProj/defaults/'
 
 def yes_or_no(prompt: str) -> bool:
     """Asks the user for input and returns a boolean
@@ -30,7 +31,7 @@ def get_int_between(low: int, high: int) -> int:
             num = int(input(f'Enter an integer between {low}, and {high}> '))
             if low <= num <= high:
                 return num
-        except: pass
+        except ValueError: pass
     return num
 
 def get_name() -> str:
@@ -67,36 +68,26 @@ def make_new():
 
 def make_new_c(name):
     path = CODING_PATH + "c++/"+ name + "/"
-    print(path)
-    system("mkdir " + path)
-    chdir(path)
-    system("cd " + path)
-    system("cp -r \"" + CODING_PATH +"python/autoproj/defaults/c++/makefile\" .")
-    system("cp -r \"" + CODING_PATH +"python/autoproj/defaults/c++/src\" .")
-    system("cp -r \"" + CODING_PATH +"python/autoproj/defaults/c++/.ycm_extra_conf.py\" .")
-    system("vim -O makefile src/main.cpp")
+    mkdir(path)
+    system(f'/bin/zsh -c "new_window {path} \'cp -r {DEFAULTS_PATH}c++/* .;vim makefile src/main.cpp -O\'"')
 
 def make_new_python(name):
     bot = yes_or_no("Is this a discord bot?")
     path = CODING_PATH + "python/"
     if bot:
         path += "discordbots/"
-    path += name
-    system("mkdir "+path)
-    chdir(path)
-    system("vim main.py")
+    print(path)
+    mkdir(path)
+    system(f'/bin/zsh -c "new_window {path} vim main.py"')
 
 def make_new_java(name):
     path = CODING_PATH + "java/"
     if yes_or_no("Is this for school?"):
         path = SCHOOL_PATH + "comp/"
     path += name
-    system("mkdir " + path)
+    mkdir(path)
     chdir(path)
-    system("cp -r \"" + CODING_PATH + "python/autoproj/defaults/java/makefile\" .")
-    system("cp -r \"" + CODING_PATH + "python/autoproj/defaults/java/Main.java\" .")
-    system("vim * -O")
-
+    system(f'/bin/zsh -c "new_window {path} \'cp -r {DEFAULTS_PATH}java/* .; vim * -O\'"')
 
 def make_new_web(name):
     PlainJS = yes_or_no("Is this plain javascript")
@@ -104,23 +95,17 @@ def make_new_web(name):
     if PlainJS:
         path += "JustJS/"
     path += name
-    system("mkdir "+path)
+    mkdir(path)
     chdir(path)
     if PlainJS:
-        system("vim sketch.js")
+        system(f'/bin/zsh -c "new_window {path} vim sketch.js"')
     else:
-        system("cp " + CODING_PATH + "python/autoproj/defaults/web/index.html .")
-        system("chmod 777 index.html");
-        system("touch index.css")
-        system("touch index.js")
-        system("vim * -O")
+        system(f'/bin/zsh -c "new_window {path} \'cp {DEFAULTS_PATH}/web/index.html .; chmod 777 index.html; vim index.html index.css index.js -O\'"')
 
 def make_new_rust(name):
     path = CODING_PATH + "rust/"
     chdir(path)
-    system("cargo new " + name)
-    chdir(path + name)
-    system("vim Cargo.toml src/main.rs -O")
+    system(f'/bin/zsh -c "new_window {path} \'cargo new {name}; cd {name}; vim Cargo.toml src/main.rs -O\'"')
 
 def parse_argv():
     try:
