@@ -15,7 +15,6 @@ OBJECTS=$(patsubst src/%$(EXTENSION),bin/%.o,$(wildcard src/*$(EXTENSION)))# in 
 
 all: bin $(OBJECTS)# compile everything
 	$(CC) bin/*.o $(CFLAGS) -o bin/test $(INCLUDE) $(LIBS)
-	@echo
 	
 bin/%.o: src/%$(EXTENSION)# create object file for %
 	$(CC) $< $(CFLAGS) -c -o $@ $(INCLUDE) $(LIBS)
