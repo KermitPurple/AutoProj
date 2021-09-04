@@ -14,7 +14,7 @@ OBJECTS=$(patsubst src/%$(EXTENSION),bin/%.o,$(wildcard src/*$(EXTENSION)))# in 
 # e.g. bin/main.o bin/File1/.o
 
 all: bin $(OBJECTS)# compile everything
-	$(CC) bin/*.o $(CFLAGS) -o bin/test.exe $(INCLUDE) $(LIBS)
+	$(CC) bin/*.o $(CFLAGS) -o bin/test $(INCLUDE) $(LIBS)
 	@echo
 	
 bin/%.o: src/%$(EXTENSION)# create object file for %
@@ -27,4 +27,4 @@ bin:# create folder bin
 	mkdir bin
 
 test: all# compile everything then run executible
-	bin/test.exe
+	bin/test
