@@ -2,6 +2,7 @@
 CC=clang++#compiler
 EXTENSION=.cpp#c++ extension
 FLAGS=-Wall -Iinclude#flags to be passed to compiler
+INCLUDES=$(wildcard include/*)# get all include files
 OBJECTS=$(patsubst src/%$(EXTENSION),bin/%.o,$(wildcard src/*$(EXTENSION)))# in bin/%.o format, all of the objects to be compiled
 # previous line explained:
 # patsubst replaces the first arg template with the second arg template on the variable in the third arg
@@ -14,7 +15,7 @@ OBJECTS=$(patsubst src/%$(EXTENSION),bin/%.o,$(wildcard src/*$(EXTENSION)))# in 
 all: bin $(OBJECTS)# compile everything
 	$(CC) bin/*.o $(FLAGS) -o bin/test
 	
-bin/%.o: src/%$(EXTENSION)# create object file for %
+bin/%.o: src/%$(EXTENSION) $(INCLUDES)# create object file for %
 	$(CC) $< $(FLAGS) -c -o $@
 
 clean:# remove contents of bin
