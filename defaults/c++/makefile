@@ -1,9 +1,7 @@
 # Last updated 2021-9-3 by Shane McDonough
 CC=clang++#compiler
 EXTENSION=.cpp#c++ extension
-CFLAGS=-Wall# -c compile and assemble do not link, -Wall turns warnings on
-INCLUDE=-Iinclude# folders to be included, anything following -I is the directory the compiler can now see
-LIBS=# libs to be included, anything following -l is a library that is included
+FLAGS=-Wall -Iinclude#flags to be passed to compiler
 OBJECTS=$(patsubst src/%$(EXTENSION),bin/%.o,$(wildcard src/*$(EXTENSION)))# in bin/%.o format, all of the objects to be compiled
 # previous line explained:
 # patsubst replaces the first arg template with the second arg template on the variable in the third arg
@@ -14,10 +12,10 @@ OBJECTS=$(patsubst src/%$(EXTENSION),bin/%.o,$(wildcard src/*$(EXTENSION)))# in 
 # e.g. bin/main.o bin/File1/.o
 
 all: bin $(OBJECTS)# compile everything
-	$(CC) bin/*.o $(CFLAGS) -o bin/test $(INCLUDE) $(LIBS)
+	$(CC) bin/*.o $(FLAGS) -o bin/test
 	
 bin/%.o: src/%$(EXTENSION)# create object file for %
-	$(CC) $< $(CFLAGS) -c -o $@ $(INCLUDE) $(LIBS)
+	$(CC) $< $(FLAGS) -c -o $@
 
 clean:# remove contents of bin
 	rm -rf bin
