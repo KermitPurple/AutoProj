@@ -1,7 +1,7 @@
 # Last updated 2021-9-3 by Shane McDonough
 CC=clang++#compiler
 EXTENSION=.cpp#c++ extension
-FLAGS=-Wall -Iinclude#flags to be passed to compiler
+FLAGS=-Wall -Iinclude -std=c++20#flags to be passed to compiler
 INCLUDES=$(wildcard include/*)# get all include files
 OBJECTS=$(patsubst src/%$(EXTENSION),bin/%.o,$(wildcard src/*$(EXTENSION)))# in bin/%.o format, all of the objects to be compiled
 # previous line explained:
