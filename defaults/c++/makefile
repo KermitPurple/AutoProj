@@ -1,6 +1,7 @@
 # Last updated 2021-9-11 by Shane McDonough
 CC=clang++#compiler
 EXTENSION=.cpp#c++ extension
+TARGET=bin/test#the output file
 FLAGS=-Wall -Iinclude -std=c++20#flags to be passed to compiler
 INCLUDES=$(wildcard include/*)# get all include files
 OBJECTS=$(patsubst src/%$(EXTENSION),bin/%.o,$(wildcard src/*$(EXTENSION)))# in bin/%.o format, all of the objects to be compiled
@@ -13,7 +14,7 @@ OBJECTS=$(patsubst src/%$(EXTENSION),bin/%.o,$(wildcard src/*$(EXTENSION)))# in 
 # e.g. bin/main.o bin/File1/.o
 
 all: bin $(OBJECTS)# compile everything
-	$(CC) bin/*.o $(FLAGS) -o bin/test
+	$(CC) bin/*.o $(FLAGS) -o $(TARGET)
 	
 bin/%.o: src/%$(EXTENSION) $(INCLUDES)# create object file for %
 	$(CC) $< $(FLAGS) -c -o $@
@@ -25,4 +26,4 @@ bin:# create folder bin
 	mkdir bin
 
 test: all# compile everything then run executible
-	bin/test
+	$(TARGET)
