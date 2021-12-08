@@ -7,6 +7,13 @@ SCHOOL_PATH = "/Users/shane/dropbox/school/fall2021/"
 DEFAULTS_PATH = CODING_PATH + 'python/AutoProj/defaults/'
 new_cmd = 'new_tab'
 
+CPP_EXTS = ['c', 'cpp', 'c++']
+PYTHON_EXTS = ['p', 'py', 'pyth', 'python']
+JAVA_EXTS = ['j', 'jv', 'java']
+WEB_EXTS = ['w', 'web', 'html', 'css', 'js', 'javascript']
+RUST_EXTS = ['r', 'rs', 'rust']
+ALL_EXTS = CPP_EXTS + PYTHON_EXTS + JAVA_EXTS + WEB_EXTS + RUST_EXTS
+
 def yes_or_no(prompt: str) -> bool:
     """Asks the user for input and returns a boolean
     :prompt: The question to be posed to the user
@@ -114,21 +121,19 @@ def parse_argv():
         projType, projName = argv[1:3]
     except:
         projType = argv[1]
+        if projType not in ALL_EXTS:
+            print("ERROR: A project type with that name does not exist")
+            return
         projName = input("Enter Name: ")
-    cppList = ['c', 'cpp', 'c++']
-    pythonList = ['p', 'py', 'pyth', 'python']
-    javaList = ['j', 'jv', 'java']
-    webList = ['w', 'web', 'html', 'css', 'js', 'javascript']
-    rustList = ['r', 'rs', 'rust']
-    if projType.lower() in cppList:
+    if projType.lower() in CPP_EXTS:
         make_new_c(projName)
-    elif projType.lower() in pythonList:
+    elif projType.lower() in PYTHON_EXTS:
         make_new_python(projName)
-    elif projType.lower() in javaList:
+    elif projType.lower() in JAVA_EXTS:
         make_new_java(projName)
-    elif projType.lower() in webList:
+    elif projType.lower() in WEB_EXTS:
         make_new_web(projName)
-    elif projType.lower() in rustList:
+    elif projType.lower() in RUST_EXTS:
         make_new_rust(projName)
     else:
         print("ERROR: A project type with that name does not exist")
