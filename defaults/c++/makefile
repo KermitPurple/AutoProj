@@ -33,3 +33,4 @@ bin:# create folder bin
 test: all# compile everything then run executible
 	$(TARGET)
 
+.PHONY: all clean test
