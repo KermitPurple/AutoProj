@@ -6,6 +6,7 @@ CODING_PATH = "/Users/shane/coding/"
 SCHOOL_PATH = "/Users/shane/dropbox/school/fall2021/"
 DEFAULTS_PATH = CODING_PATH + 'python/AutoProj/defaults/'
 new_cmd = 'new_tab'
+src_cmd = '. $DOTFILES_DIR/zsh/zshrc'
 
 CPP_EXTS = ['c', 'cpp', 'c++']
 PYTHON_EXTS = ['p', 'py', 'pyth', 'python']
@@ -77,7 +78,7 @@ def make_new():
 def make_new_c(name):
     path = CODING_PATH + "c++/"+ name + "/"
     mkdir(path)
-    system(f'/bin/zsh -c "{new_cmd} {path} \'cp -r {DEFAULTS_PATH}c++/* .&&vim makefile src/main.cpp -O\'"')
+    system(f'/bin/zsh -c "{src_cmd} && {new_cmd} {path} \'cp -r {DEFAULTS_PATH}c++/* .&&vim makefile src/main.cpp -O\'"')
 
 def make_new_python(name):
     bot = yes_or_no("Is this a discord bot?")
@@ -87,7 +88,7 @@ def make_new_python(name):
     path += name
     print(path)
     mkdir(path)
-    system(f'/bin/zsh -c "{new_cmd} {path} vim main.py"')
+    system(f'/bin/zsh -c "{src_cmd} && {new_cmd} {path} vim main.py"')
 
 def make_new_java(name):
     path = CODING_PATH + "java/"
@@ -96,7 +97,7 @@ def make_new_java(name):
     path += name
     mkdir(path)
     chdir(path)
-    system(f'/bin/zsh -c "{new_cmd} {path} \'cp -r {DEFAULTS_PATH}java/* .&& vim * -O\'"')
+    system(f'/bin/zsh -c "{src_cmd} && {new_cmd} {path} \'cp -r {DEFAULTS_PATH}java/* .&& vim * -O\'"')
 
 def make_new_web(name):
     PlainJS = yes_or_no("Is this plain javascript")
@@ -107,14 +108,14 @@ def make_new_web(name):
     mkdir(path)
     chdir(path)
     if PlainJS:
-        system(f'/bin/zsh -c "{new_cmd} {path} vim sketch.js"')
+        system(f'/bin/zsh -c "{src_cmd} && {new_cmd} {path} vim sketch.js"')
     else:
-        system(f'/bin/zsh -c "{new_cmd} {path} \'cp {DEFAULTS_PATH}/web/index.html .&& chmod 777 index.html&& vim index.html index.css index.js -O\'"')
+        system(f'/bin/zsh -c "{src_cmd} && {new_cmd} {path} \'cp {DEFAULTS_PATH}/web/index.html .&& chmod 777 index.html&& vim index.html index.css index.js -O\'"')
 
 def make_new_rust(name):
     path = CODING_PATH + "rust/"
     chdir(path)
-    system(f'/bin/zsh -c "{new_cmd} {path} \'cargo new {name}&& cd {name}&& vim Cargo.toml src/main.rs -O\'"')
+    system(f'zsh -c "{src_cmd} && {new_cmd} {path} \'cargo new {name}&& cd {name}&& vim Cargo.toml src/main.rs -O\'"')
 
 def parse_argv():
     try:
