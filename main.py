@@ -6,7 +6,6 @@ from sys import argv
 CODING_PATH = environ['CODING_DIR']
 SCHOOL_PATH = environ['SCHOOL_DIR']
 DEFAULTS_PATH = os.path.join(CODING_PATH, 'python/AutoProj/defaults/')
-new_cmd = 'new_tab'
 
 CPP_EXTS = ['c', 'cpp', 'c++']
 PYTHON_EXTS = ['p', 'py', 'pyth', 'python']
@@ -14,6 +13,10 @@ JAVA_EXTS = ['j', 'jv', 'java']
 WEB_EXTS = ['w', 'web', 'html', 'css', 'js', 'javascript']
 RUST_EXTS = ['r', 'rs', 'rust']
 ALL_EXTS = CPP_EXTS + PYTHON_EXTS + JAVA_EXTS + WEB_EXTS + RUST_EXTS
+
+new_cmd = 'new_tab'
+g_repo = False
+gh_repo = False
 
 def yes_or_no(prompt: str) -> bool:
     '''
@@ -57,6 +60,12 @@ def get_name() -> str:
         print('Please make it one god damn word')
     return name
 
+def get_defaults_path(folder: str) -> str:
+    '''
+    :folder: str, foldername in DEFAULTS_PATH
+    '''
+    return os.path.join(DEFAULTS_PATH, f'{folder}/*')
+
 def make_new():
     print('1) New C++ Project')
     print('2) New Python Project')
@@ -78,7 +87,7 @@ def make_new():
         elif choice == 5:
             make_new_rust(name)
 
-def make_repo(name: str = None)
+def make_repo(name: str = None):
     '''
     create a git repo and a github repo
     :name: str, the name of the repo
@@ -100,40 +109,76 @@ def make_new_c(name: str):
     '''
     path = os.path.join(CODING_PATH, 'c++', name)
     mkdir(path)
-    system(f'{new_cmd} {path} \'cp -r {os.path.join(DEFAULTS_PATH, "c++/*")} .&&vim makefile src/main.cpp -O\'')
+    chdir(path)
+    system(f'cp -r {get_defaults_path("c++")} .')
+    if g_repo:
+        make_repo(name if gh_repo else None)
+    system(f'{new_cmd} {path} \'vim makefile src/main.cpp -O\'')
 
-def make_new_python(name):
+def make_new_python(name: str):
+    '''
+    Make a new project in Python
+    :name: str, the name of the project
+    '''
     bot = yes_or_no('Is this a discord bot?')
     path = os.path.join(CODING_PATH, 'python')
     if bot:
         path = os.path.join(path, 'discordbots')
     path = os.path.join(path, name)
     mkdir(path)
+    chdir(path)
+    system(f'cp -r {get_defaults_path("python")} .')
+    if g_repo:
+        make_repo(name if gh_repo else None)
     system(f'{new_cmd} {path} vim main.py')
 
-def make_new_java(name):
+def make_new_java(name: str):
+    '''
+    Make a new project in Java
+    :name: str, the name of the project
+    '''
     path = os.path.join(CODING_PATH, 'java/')
     if yes_or_no('Is this for school?'):
         path = os.path.join(SCHOOL_PATH, 'comp')
     path = os.path.join(path, name)
     mkdir(path)
-    system(f'{new_cmd} {path} \'cp -r {os.path.join(DEFAULTS_PATH, "java/*")} .&& vim * -O\'')
+    chdir(path)
+    system(f'cp -r {get_defaults_path("java")} .')
+    if g_repo:
+        make_repo(name if gh_repo else None)
+    system(f'{new_cmd} {path} \'vim * -O\'')
 
-def make_new_web(name):
+def make_new_web(name: str):
+    '''
+    Make a new web project
+    :name: str, the name of the project
+    '''
     PlainJS = yes_or_no('Is this plain javascript')
     path = os.path.join(CODING_PATH, 'web')
     if PlainJS:
         path = os.path.join(path, 'JustJS')
     path = os.path.join(path, name)
     mkdir(path)
+    chdir(path)
     if PlainJS:
-        system(f'{new_cmd} {path} vim sketch.js')
+        system(f'touch index.js')
     else:
-        system(f'{new_cmd} {path} \'cp {os.path.join(DEFAULTS_PATH, "web/index.html")} .&& chmod +x index.html&& vim index.html index.css index.js -O\'')
+        system(f'cp {get_defaults_path("web")} .')
+    if g_repo:
+        make_repo(name if gh_repo else None)
+    system(f'{new_cmd} {path} \'vim * -O\'')
 
-def make_new_rust(name):
+def make_new_rust(name: str):
+    '''
+    Make a new project in Rust
+    :name: str, the name of the project
+    '''
     path = os.path.join(CODING_PATH, 'rust')
-    system(f'{new_cmd} {path} \'cargo new {name}&& cd {name}&& vim Cargo.toml src/main.rs -O\'')
+    chdir(path);
+    system(f'cargo new {name} && cd {name}')
+    if g_repo:
+        make_repo(name if gh_repo else None)
+    system(f'{new_cmd} {path} \'vim Cargo.toml src/main.rs -O\'')
 
 def parse_argv():
     try:
