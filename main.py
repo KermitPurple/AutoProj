@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-from os import system, chdir, path, mkdir
+import os
+from os import system, chdir, path, mkdir, environ
 from sys import argv
 
-CODING_PATH = "/Users/shane/coding/"
-SCHOOL_PATH = "/Users/shane/dropbox/school/fall2021/"
-DEFAULTS_PATH = CODING_PATH + 'python/AutoProj/defaults/'
+CODING_PATH = environ['CODING_DIR']
+SCHOOL_PATH = environ['SCHOOL_DIR']
+DEFAULTS_PATH = os.path.join(CODING_PATH, 'python/AutoProj/defaults/')
 new_cmd = 'new_tab'
 
 CPP_EXTS = ['c', 'cpp', 'c++']
@@ -15,10 +16,11 @@ RUST_EXTS = ['r', 'rs', 'rust']
 ALL_EXTS = CPP_EXTS + PYTHON_EXTS + JAVA_EXTS + WEB_EXTS + RUST_EXTS
 
 def yes_or_no(prompt: str) -> bool:
-    """Asks the user for input and returns a boolean
+    '''
+    Asks the user for input and returns a boolean
     :prompt: The question to be posed to the user
     :returns: True if yes, false if no
-    """
+    '''
     while 1:
         response = input(f'{prompt} (yes, no)> ').lower()
         if response == 'y' or response == 'yes':
@@ -27,13 +29,14 @@ def yes_or_no(prompt: str) -> bool:
             return False
 
 def get_int_between(low: int, high: int) -> int:
-    """gets and validates user input. returns a valid int
+    '''
+    gets and validates user input. returns a valid int
     :low: the lowest the validated input can be
     :high: the highest the validated input can be
     :returns: An integer chosen by the user in the range
-    """
+    '''
     if low > high:
-        raise ValueError("Low cannot be greater than high")
+        raise ValueError('Low cannot be greater than high')
     while 1:
         try:
             num = int(input(f'Enter an integer between {low}, and {high}> '))
@@ -43,23 +46,24 @@ def get_int_between(low: int, high: int) -> int:
     return num
 
 def get_name() -> str:
-    """Get and validate user input for a name
+    '''
+    Get and validate user input for a name
     :returns: validated name
-    """
+    '''
     while 1:
-        name = input("Enter Name> ")
+        name = input('Enter Name> ')
         if len(name.split()) <= 1:
             break
-        print("Please make it one god damn word")
+        print('Please make it one god damn word')
     return name
 
 def make_new():
-    print("1) New C++ Project")
-    print("2) New Python Project")
-    print("3) New Java Project")
-    print("4) New web Project")
-    print("5) New rust Project")
-    print("6) Cancel")
+    print('1) New C++ Project')
+    print('2) New Python Project')
+    print('3) New Java Project')
+    print('4) New web Project')
+    print('5) New rust Project')
+    print('6) Cancel')
     choice = get_int_between(1, 6)
     if choice != 6:
         name = get_name()
@@ -75,45 +79,41 @@ def make_new():
             make_new_rust(name)
 
 def make_new_c(name):
-    path = CODING_PATH + "c++/"+ name + "/"
+    path = os.path.join(CODING_PATH, 'c++', name)
     mkdir(path)
-    system(f'{new_cmd} {path} \'cp -r {DEFAULTS_PATH}c++/* .&&vim makefile src/main.cpp -O\'')
+    system(f'{new_cmd} {path} \'cp -r {os.path.join(DEFAULTS_PATH, "c++/*")} .&&vim makefile src/main.cpp -O\'')
 
 def make_new_python(name):
-    bot = yes_or_no("Is this a discord bot?")
-    path = CODING_PATH + "python/"
+    bot = yes_or_no('Is this a discord bot?')
+    path = os.path.join(CODING_PATH, 'python')
     if bot:
-        path += "discordbots/"
-    path += name
-    print(path)
+        path = os.path.join(path, 'discordbots')
+    path = os.path.join(path, name)
     mkdir(path)
     system(f'{new_cmd} {path} vim main.py')
 
 def make_new_java(name):
-    path = CODING_PATH + "java/"
-    if yes_or_no("Is this for school?"):
-        path = SCHOOL_PATH + "comp/"
-    path += name
+    path = os.path.join(CODING_PATH, 'java/')
+    if yes_or_no('Is this for school?'):
+        path = os.path.join(SCHOOL_PATH, 'comp')
+    path = os.path.join(path, name)
     mkdir(path)
-    chdir(path)
-    system(f'{new_cmd} {path} \'cp -r {DEFAULTS_PATH}java/* .&& vim * -O\'')
+    system(f'{new_cmd} {path} \'cp -r {os.path.join(DEFAULTS_PATH, "java/*")} .&& vim * -O\'')
 
 def make_new_web(name):
-    PlainJS = yes_or_no("Is this plain javascript")
-    path = CODING_PATH + "web/"
+    PlainJS = yes_or_no('Is this plain javascript')
+    path = os.path.join(CODING_PATH, 'web')
     if PlainJS:
-        path += "JustJS/"
-    path += name
+        path = os.path.join(path, 'JustJS')
+    path = os.path.join(path, name)
     mkdir(path)
-    chdir(path)
     if PlainJS:
         system(f'{new_cmd} {path} vim sketch.js')
     else:
-        system(f'{new_cmd} {path} \'cp {DEFAULTS_PATH}/web/index.html .&& chmod 777 index.html&& vim index.html index.css index.js -O\'')
+        system(f'{new_cmd} {path} \'cp {os.path.join(DEFAULTS_PATH, "web/index.html")} .&& chmod +x index.html&& vim index.html index.css index.js -O\'')
 
 def make_new_rust(name):
-    path = CODING_PATH + "rust/"
-    chdir(path)
+    path = os.path.join(CODING_PATH, 'rust')
     system(f'{new_cmd} {path} \'cargo new {name}&& cd {name}&& vim Cargo.toml src/main.rs -O\'')
 
 def parse_argv():
@@ -122,9 +122,9 @@ def parse_argv():
     except:
         projType = argv[1]
         if projType not in ALL_EXTS:
-            print("ERROR: A project type with that name does not exist")
+            print('ERROR: A project type with that name does not exist')
             return
-        projName = input("Enter Name: ")
+        projName = input('Enter Name: ')
     if projType.lower() in CPP_EXTS:
         make_new_c(projName)
     elif projType.lower() in PYTHON_EXTS:
@@ -136,10 +136,10 @@ def parse_argv():
     elif projType.lower() in RUST_EXTS:
         make_new_rust(projName)
     else:
-        print("ERROR: A project type with that name does not exist")
+        print('ERROR: A project type with that name does not exist')
 
 def main():
-    """Driver Code"""
+    '''Driver Code'''
     if '-w' in argv:
         argv.remove('-w')
         global new_cmd
@@ -149,5 +149,5 @@ def main():
     else:
         parse_argv()
 
-if (__name__ == "__main__"):
+if (__name__ == '__main__'):
     main()
