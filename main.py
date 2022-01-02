@@ -229,6 +229,7 @@ def parse_argv():
     gh_repo = args.github
     if args.type is None:
         make_new()
+        return
     elif args.name is None:
         name = get_name()
     else:
