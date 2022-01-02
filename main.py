@@ -78,7 +78,26 @@ def make_new():
         elif choice == 5:
             make_new_rust(name)
 
-def make_new_c(name):
+def make_repo(name: str = None)
+    '''
+    create a git repo and a github repo
+    :name: str, the name of the repo
+    if name is none, no github repository is created
+    '''
+    file_whitelist = 'src include *.py *.java *.js *.css *.html Cargo.toml'
+    system(f'git init &&\
+        git add {file_whitelist} &&\
+        git commit -mInitial')
+    if name:
+        system(f'gh repo create {name} &&\
+            git remote add origin git@github.com:kermitpurple/{name} &&\
+            git push --set-upstream origin main')
+
+def make_new_c(name: str):
+    '''
+    Make a new project in c or c++
+    :name: str, the name of the project
+    '''
     path = os.path.join(CODING_PATH, 'c++', name)
     mkdir(path)
     system(f'{new_cmd} {path} \'cp -r {os.path.join(DEFAULTS_PATH, "c++/*")} .&&vim makefile src/main.cpp -O\'')
