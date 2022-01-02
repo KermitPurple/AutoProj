@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import os
+import os, argparse
 from os import system, chdir, path, mkdir, environ
 from sys import argv
 
@@ -67,9 +67,9 @@ def get_defaults_path(folder: str) -> str:
     return os.path.join(DEFAULTS_PATH, f'{folder}/*')
 
 def make_new():
-    print('1) New C++ Project')
-    print('2) New Python Project')
-    print('3) New Java Project')
+    print('1) New c++ Project')
+    print('2) New python Project')
+    print('3) New java Project')
     print('4) New web Project')
     print('5) New rust Project')
     print('6) Cancel')
@@ -87,18 +87,17 @@ def make_new():
         elif choice == 5:
             make_new_rust(name)
 
-def make_repo(name: str = None):
+def make_repo(name: str = None, whitelist: str = '*'):
     '''
     create a git repo and a github repo
     :name: str, the name of the repo
     if name is none, no github repository is created
     '''
-    file_whitelist = 'src include *.py *.java *.js *.css *.html Cargo.toml'
     system(f'git init &&\
-        git add {file_whitelist} &&\
+        git add {whitelist} &&\
         git commit -mInitial')
     if name:
-        system(f'gh repo create {name} &&\
+        system(f'gh repo create {name} --public &&\
             git remote add origin git@github.com:kermitpurple/{name} &&\
             git push --set-upstream origin main')
 
@@ -177,41 +176,81 @@ def make_new_rust(name: str):
     chdir(path);
     system(f'cargo new {name} && cd {name}')
     if g_repo:
-        make_repo(name if gh_repo else None)
+        make_repo(name if gh_repo else None, 'src Cargo.toml')
     system(f'{new_cmd} {path} \'vim Cargo.toml src/main.rs -O\'')
 
+
 def parse_argv():
-    try:
-        projType, projName = argv[1:3]
-    except:
-        projType = argv[1]
-        if projType not in ALL_EXTS:
-            print('ERROR: A project type with that name does not exist')
-            return
-        projName = input('Enter Name: ')
-    if projType.lower() in CPP_EXTS:
-        make_new_c(projName)
-    elif projType.lower() in PYTHON_EXTS:
-        make_new_python(projName)
-    elif projType.lower() in JAVA_EXTS:
-        make_new_java(projName)
-    elif projType.lower() in WEB_EXTS:
-        make_new_web(projName)
-    elif projType.lower() in RUST_EXTS:
-        make_new_rust(projName)
+    '''
+    Parse the args of the program
+    edit sys.argv
+    '''
+    global new_cmd, g_repo, gh_repo, argv
+    parser = argparse.ArgumentParser(prog='new', description='creates a new project')
+    parser.add_argument(
+        'type',
+        type=str,
+        nargs='?',
+        default=None,
+        help='type of project i.e. c++|python|java|web|rust'
+    )
+    parser.add_argument(
+        'name',
+        type=str,
+        nargs='?',
+        default=None,
+        help='name of the project, what the folder/repo will be named'
+    )
+    parser.add_argument(
+        '-w',
+        '--window',
+        action='store_true',
+        default=False,
+        help='create new window instead of new tab'
+    )
+    parser.add_argument(
+        '-g',
+        '--git',
+        action='store_true',
+        default=False,
+        help='create a git repository'
+    )
+    parser.add_argument(
+        '-H',
+        '--github',
+        action='store_true',
+        default=False,
+        help='create a github repository'
+    )
+    args = parser.parse_args()
+    if args.window:
+        new_cmd = 'new_window'
+    g_repo = args.git
+    gh_repo = args.github
+    if args.type is None:
+        make_new()
+    elif args.name is None:
+        name = get_name()
     else:
-        print('ERROR: A project type with that name does not exist')
+        name = args.name
+    typ = args.type.lower()
+    if typ in CPP_EXTS:
+        make_new_c(name)
+    elif typ in PYTHON_EXTS:
+        make_new_python(name)
+    elif typ in JAVA_EXTS:
+        make_new_java(name)
+    elif typ in WEB_EXTS:
+        make_new_web(name)
+    elif typ in RUST_EXTS:
+        make_new_rust(name)
+    else:
+        eprint('ERROR: A project type with that name does not exist')
+        exit(1)
 
 def main():
     '''Driver Code'''
-    if '-w' in argv:
-        argv.remove('-w')
-        global new_cmd
-        new_cmd = 'new_window'
-    if len(argv) < 2:
-        make_new()
-    else:
-        parse_argv()
+    parse_argv()
 
 if (__name__ == '__main__'):
     main()
