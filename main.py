@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import TerminalGameTools as tgt
 import os, argparse
 from os import system, chdir, path, mkdir, environ
 from sys import argv
@@ -17,36 +18,6 @@ ALL_EXTS = CPP_EXTS + PYTHON_EXTS + JAVA_EXTS + WEB_EXTS + RUST_EXTS
 new_cmd = 'new_tab'
 g_repo = False
 gh_repo = False
-
-def yes_or_no(prompt: str) -> bool:
-    '''
-    Asks the user for input and returns a boolean
-    :prompt: The question to be posed to the user
-    :returns: True if yes, false if no
-    '''
-    while 1:
-        response = input(f'{prompt} (yes, no)> ').lower()
-        if response == 'y' or response == 'yes':
-            return True
-        elif response == 'n' or response == 'no':
-            return False
-
-def get_int_between(low: int, high: int) -> int:
-    '''
-    gets and validates user input. returns a valid int
-    :low: the lowest the validated input can be
-    :high: the highest the validated input can be
-    :returns: An integer chosen by the user in the range
-    '''
-    if low > high:
-        raise ValueError('Low cannot be greater than high')
-    while 1:
-        try:
-            num = int(input(f'Enter an integer between {low}, and {high}> '))
-            if low <= num <= high:
-                return num
-        except ValueError: pass
-    return num
 
 def get_name() -> str:
     '''
@@ -67,25 +38,27 @@ def get_defaults_path(folder: str) -> str:
     return os.path.join(DEFAULTS_PATH, f'{folder}/*')
 
 def make_new():
-    print('1) New c++ Project')
-    print('2) New python Project')
-    print('3) New java Project')
-    print('4) New web Project')
-    print('5) New rust Project')
-    print('6) Cancel')
-    choice = get_int_between(1, 6)
-    if choice != 6:
+    choice = tgt.give_options([
+        'New c++ Project',
+        'New python Project',
+        'New java Project',
+        'New web Project',
+        'New rust Project',
+        'Cancel'
+    ])[0]
+    if choice != 5:
         name = get_name()
-        if choice == 1:
-            make_new_c(name)
-        elif choice == 2:
-            make_new_python(name)
-        elif choice == 3:
-            make_new_java(name)
-        elif choice == 4:
-            make_new_web(name)
-        elif choice == 5:
-            make_new_rust(name)
+        match choice:
+            case 0:
+                make_new_c(name)
+            case 1:
+                make_new_python(name)
+            case 2:
+                make_new_java(name)
+            case 3:
+                make_new_web(name)
+            case 4:
+                make_new_rust(name)
 
 def make_repo(name: str = None, whitelist: str = '*'):
     '''
@@ -119,7 +92,7 @@ def make_new_python(name: str):
     Make a new project in Python
     :name: str, the name of the project
     '''
-    bot = yes_or_no('Is this a discord bot?')
+    bot = tgt.get_yes_no_response(prompt='Is this a discord bot?')
     path = os.path.join(CODING_PATH, 'python')
     if bot:
         path = os.path.join(path, 'discordbots')
@@ -137,7 +110,7 @@ def make_new_java(name: str):
     :name: str, the name of the project
     '''
     path = os.path.join(CODING_PATH, 'java/')
-    if yes_or_no('Is this for school?'):
+    if tgt.get_yes_no_response(prompt='Is this for school?'):
         path = os.path.join(SCHOOL_PATH, 'comp')
     path = os.path.join(path, name)
     mkdir(path)
@@ -152,7 +125,7 @@ def make_new_web(name: str):
     Make a new web project
     :name: str, the name of the project
     '''
-    PlainJS = yes_or_no('Is this plain javascript')
+    PlainJS = tgt.get_yes_no_response(prompt='Is this plain javascript')
     path = os.path.join(CODING_PATH, 'web')
     if PlainJS:
         path = os.path.join(path, 'JustJS')
@@ -178,7 +151,6 @@ def make_new_rust(name: str):
     if g_repo:
         make_repo(name if gh_repo else None, 'src Cargo.toml')
     system(f'{new_cmd} {path} \'vim Cargo.toml src/main.rs -O\'')
-
 
 def parse_argv():
     '''
