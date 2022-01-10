@@ -147,7 +147,9 @@ def make_new_rust(name: str):
     '''
     path = os.path.join(CODING_PATH, 'rust')
     chdir(path);
-    system(f'cargo new {name} && cd {name}')
+    system(f'cargo new {name}')
+    path = os.path.join(path, name)
+    chdir(path)
     if g_repo:
         make_repo(name if gh_repo else None, 'src Cargo.toml')
     system(f'{new_cmd} {path} \'vim Cargo.toml src/main.rs -O\'')
