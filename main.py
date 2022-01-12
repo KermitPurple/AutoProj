@@ -110,8 +110,6 @@ def make_new_java(name: str):
     :name: str, the name of the project
     '''
     path = os.path.join(CODING_PATH, 'java/')
-    if tgt.get_yes_no_response(prompt='Is this for school?'):
-        path = os.path.join(SCHOOL_PATH, 'comp')
     path = os.path.join(path, name)
     mkdir(path)
     chdir(path)
