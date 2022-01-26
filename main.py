@@ -87,7 +87,7 @@ def make_new_c(name: str):
     system(f'cp -r {get_defaults_path("c++")} .')
     if g_repo:
         make_repo(name if gh_repo else None)
-    system(f'{new_cmd} {path} \'vim makefile src/main.cpp -O\'')
+    system(f'{new_cmd} \'{path}\' \'vim makefile src/main.cpp -O\'')
 
 def make_new_python(name: str):
     '''
@@ -101,7 +101,7 @@ def make_new_python(name: str):
     system(f'cp -r {get_defaults_path("python")} .')
     if g_repo:
         make_repo(name if gh_repo else None)
-    system(f'{new_cmd} {path} vim main.py')
+    system(f'{new_cmd} \'{path}\' vim main.py')
 
 def make_new_java(name: str):
     '''
@@ -115,7 +115,7 @@ def make_new_java(name: str):
     system(f'cp -r {get_defaults_path("java")} .')
     if g_repo:
         make_repo(name if gh_repo else None)
-    system(f'{new_cmd} {path} \'vim * -O\'')
+    system(f'{new_cmd} \'{path}\' \'vim * -O\'')
 
 def make_new_web(name: str):
     '''
@@ -132,7 +132,7 @@ def make_new_web(name: str):
         system(f'cp {get_defaults_path("web")} .')
     if g_repo:
         make_repo(name if gh_repo else None)
-    system(f'{new_cmd} {path} \'vim * -O\'')
+    system(f'{new_cmd} \'{path}\' \'vim * -O\'')
 
 def make_new_rust(name: str):
     '''
@@ -146,7 +146,7 @@ def make_new_rust(name: str):
     chdir(path)
     if g_repo:
         make_repo(name if gh_repo else None, 'src Cargo.toml')
-    system(f'{new_cmd} {path} \'vim Cargo.toml src/main.rs -O\'')
+    system(f'{new_cmd} \'{path}\' \'vim Cargo.toml src/main.rs -O\'')
 
 def parse_argv():
     '''
