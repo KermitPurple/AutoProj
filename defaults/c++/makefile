@@ -1,8 +1,8 @@
-# Last updated 2021-9-11 by Shane McDonough
+# Last updated 2022-01-25 by Shane McDonough
 CC=clang#c compiler
 EXTENSION=.c#c extension
 TARGET=bin/test#the output file
-FLAGS=-Wall -Iinclude#flags to be passed to compiler
+override FLAGS+=-Wall -Iinclude#flags to be passed to compiler
 ifeq ("$(wildcard src/*$(EXTENSION))", "")#if there are no c files
 	CC=clang++#c++ compiler
 	EXTENSION=.cpp#c++ extension
@@ -33,4 +33,8 @@ bin:# create folder bin
 test: all# compile everything then run executible
 	$(TARGET)
 
-.PHONY: all clean test
+debug:# run make with debug flags and call lldb
+	@make clean all FLAGS=-g
+	lldb $(TARGET)
+
+.PHONY: all clean test debug
