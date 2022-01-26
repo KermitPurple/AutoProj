@@ -209,7 +209,7 @@ def parse_argv():
         name = get_name()
     else:
         name = args.name
-    if args.path is None:
+    if args.path is not None:
         override_path = os.path.abspath(args.path)
     typ = args.type.lower()
     if typ in CPP_EXTS:
