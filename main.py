@@ -193,7 +193,7 @@ def parse_argv():
     parser.add_argument(
         '-p',
         '--path',
-        type='str',
+        type=str,
         default=None,
         help='Override path and write to'
     )
