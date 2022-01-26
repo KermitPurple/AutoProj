@@ -2,7 +2,9 @@
 CC=clang#c compiler
 EXTENSION=.c#c extension
 TARGET=bin/test#the output file
-override FLAGS+=-Wall -Iinclude#flags to be passed to compiler
+DBG_TARGET=$(TARGET).debug
+FLAGS=-Wall -Iinclude#flags to be passed to compiler
+DBG_FLAGS=-g#flags for debugging
 ifeq ("$(wildcard src/*$(EXTENSION))", "")#if there are no c files
 	CC=clang++#c++ compiler
 	EXTENSION=.cpp#c++ extension
@@ -10,19 +12,13 @@ ifeq ("$(wildcard src/*$(EXTENSION))", "")#if there are no c files
 endif
 INCLUDES=$(wildcard include/*)# get all include files
 OBJECTS=$(patsubst src/%$(EXTENSION),bin/%.o,$(wildcard src/*$(EXTENSION)))# in bin/%.o format, all of the objects to be compiled
-# previous line explained:
-# patsubst replaces the first arg template with the second arg template on the variable in the third arg
-# wildcard gets all the files that comply with its arg
-# in this case wildcard returns every file with the main extension in the src directory
-# e.g. src/main.cpp src/File1.cpp
-# patsub replaces the src and the extension
-# e.g. bin/main.o bin/File1/.o
+DBG_OBJECTS=$(patsubst %,%.debug,$(OBJECTS))
 
-all: bin $(OBJECTS)# compile everything
+all: $(OBJECTS)# compile everything
 	$(CC) bin/*.o $(FLAGS) -o $(TARGET)
 	
-bin/%.o: src/%$(EXTENSION) $(INCLUDES)# create object file for %
-	$(CC) $< $(FLAGS) -c -o $@
+bin/%.o: src/%$(EXTENSION) $(INCLUDES) bin# create object file for %
+	$(CC) $< $(FLAGS) $(DBG_FLAGS) -c -o $@
 
 clean:# remove contents of bin
 	rm -rf bin
@@ -33,8 +29,13 @@ bin:# create folder bin
 test: all# compile everything then run executible
 	$(TARGET)
 
-debug:# run make with debug flags and call lldb
-	@make clean all FLAGS=-g
-	lldb $(TARGET)
+debug: $(DBG_TARGET)# run make with debug flags and call lldb
+	lldb $(DBG_TARGET)
+
+$(DBG_TARGET): $(DBG_OBJECTS) $(INCLUDES)# create debug executable
+	$(CC) bin/*.o.debug $(FLAGS) $(DBG_FLAGS) -o $@
+
+bin/%.o.debug: src/%$(EXTENSION) $(INCLUDES) bin# create debug object file for %
+	$(CC) $< $(FLAGS) $(DBG_FLAGS) -c -o $@
 
 .PHONY: all clean test debug
