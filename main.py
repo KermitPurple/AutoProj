@@ -15,9 +15,10 @@ WEB_EXTS = ['w', 'web', 'html', 'css', 'js', 'javascript']
 RUST_EXTS = ['r', 'rs', 'rust']
 ALL_EXTS = CPP_EXTS + PYTHON_EXTS + JAVA_EXTS + WEB_EXTS + RUST_EXTS
 
-new_cmd = 'new_tab'
-g_repo = False
-gh_repo = False
+new_cmd: str = 'new_tab'
+g_repo: bool = False
+gh_repo: bool = False
+override_path: str | None = None
 
 def get_name() -> str:
     '''
@@ -79,7 +80,8 @@ def make_new_c(name: str):
     Make a new project in c or c++
     :name: str, the name of the project
     '''
-    path = os.path.join(CODING_PATH, 'c++', name)
+    path = override_path if override_path else os.path.join(CODING_PATH, 'c++')
+    path = os.path.join(path, name)
     mkdir(path)
     chdir(path)
     system(f'cp -r {get_defaults_path("c++")} .')
@@ -92,10 +94,7 @@ def make_new_python(name: str):
     Make a new project in Python
     :name: str, the name of the project
     '''
-    bot = tgt.get_yes_no_response(prompt='Is this a discord bot?')
-    path = os.path.join(CODING_PATH, 'python')
-    if bot:
-        path = os.path.join(path, 'discordbots')
+    path = override_path if override_path else os.path.join(CODING_PATH, 'python')
     path = os.path.join(path, name)
     mkdir(path)
     chdir(path)
@@ -109,7 +108,7 @@ def make_new_java(name: str):
     Make a new project in Java
     :name: str, the name of the project
     '''
-    path = os.path.join(CODING_PATH, 'java/')
+    path = override_path if override_path else os.path.join(CODING_PATH, 'java')
     path = os.path.join(path, name)
     mkdir(path)
     chdir(path)
@@ -123,10 +122,7 @@ def make_new_web(name: str):
     Make a new web project
     :name: str, the name of the project
     '''
-    PlainJS = tgt.get_yes_no_response(prompt='Is this plain javascript')
-    path = os.path.join(CODING_PATH, 'web')
-    if PlainJS:
-        path = os.path.join(path, 'JustJS')
+    path = override_path if override_path else os.path.join(CODING_PATH, 'web')
     path = os.path.join(path, name)
     mkdir(path)
     chdir(path)
@@ -143,7 +139,7 @@ def make_new_rust(name: str):
     Make a new project in Rust
     :name: str, the name of the project
     '''
-    path = os.path.join(CODING_PATH, 'rust')
+    path = override_path if override_path else os.path.join(CODING_PATH, 'rust')
     chdir(path);
     system(f'cargo new {name}')
     path = os.path.join(path, name)
@@ -157,7 +153,7 @@ def parse_argv():
     Parse the args of the program
     edit sys.argv
     '''
-    global new_cmd, g_repo, gh_repo, argv
+    global new_cmd, g_repo, gh_repo, argv, override_path
     parser = argparse.ArgumentParser(prog='new', description='creates a new project')
     parser.add_argument(
         'type',
@@ -194,6 +190,13 @@ def parse_argv():
         default=False,
         help='create a github repository'
     )
+    parser.add_argument(
+        '-p',
+        '--path',
+        type='str',
+        default=None,
+        help='Override path and write to'
+    )
     args = parser.parse_args()
     if args.window:
         new_cmd = 'new_window'
@@ -206,6 +209,8 @@ def parse_argv():
         name = get_name()
     else:
         name = args.name
+    if args.path is None:
+        override_path = args.path
     typ = args.type.lower()
     if typ in CPP_EXTS:
         make_new_c(name)
