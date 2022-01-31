@@ -126,10 +126,7 @@ def make_new_web(name: str):
     path = os.path.join(path, name)
     mkdir(path)
     chdir(path)
-    if PlainJS:
-        system(f'touch index.js')
-    else:
-        system(f'cp {get_defaults_path("web")} .')
+    system(f'cp {get_defaults_path("web")} .')
     if g_repo:
         make_repo(name if gh_repo else None)
     system(f'{new_cmd} \'{path}\' \'vim * -O\'')
