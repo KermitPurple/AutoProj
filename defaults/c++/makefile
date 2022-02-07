@@ -1,10 +1,11 @@
-# Last updated 2022-01-25 by Shane McDonough
+# Last updated 2022-02-07 by Shane McDonough
 CC=clang#c compiler
 EXTENSION=.c#c extension
 TARGET=bin/test#the output file
 DBG_TARGET=$(TARGET).debug
 FLAGS=-Wall -Iinclude#flags to be passed to compiler
 DBG_FLAGS=-g#flags for debugging
+DEBUGGER=lldb#debugger to use
 ifeq ("$(wildcard src/*$(EXTENSION))", "")#if there are no c files
 	CC=clang++#c++ compiler
 	EXTENSION=.cpp#c++ extension
@@ -14,11 +15,13 @@ INCLUDES=$(wildcard include/*)# get all include files
 OBJECTS=$(patsubst src/%$(EXTENSION),bin/%.o,$(wildcard src/*$(EXTENSION)))# in bin/%.o format, all of the objects to be compiled
 DBG_OBJECTS=$(patsubst %,%.debug,$(OBJECTS))
 
-all: $(OBJECTS)# compile everything
-	$(CC) bin/*.o $(FLAGS) -o $(TARGET)
+all: $(TARGET)
+
+$(TARGET): $(OBJECTS)# compile the target
+	$(CC) $? $(FLAGS) -o $@
 	
 bin/%.o: src/%$(EXTENSION) $(INCLUDES) bin# create object file for %
-	$(CC) $< $(FLAGS) $(DBG_FLAGS) -c -o $@
+	$(CC) $< $(FLAGS) -c -o $@
 
 clean:# remove contents of bin
 	rm -rf bin
@@ -29,8 +32,9 @@ bin:# create folder bin
 test: all# compile everything then run executible
 	$(TARGET)
 
+# DEBUGGING RULES
 debug: $(DBG_TARGET)# run make with debug flags and call lldb
-	lldb $(DBG_TARGET)
+	$(DEBUGGER) $(DBG_TARGET)
 
 $(DBG_TARGET): $(DBG_OBJECTS) $(INCLUDES)# create debug executable
 	$(CC) bin/*.o.debug $(FLAGS) $(DBG_FLAGS) -o $@
