@@ -18,7 +18,7 @@ DBG_OBJECTS=$(patsubst %,%.debug,$(OBJECTS))
 all: $(TARGET)
 
 $(TARGET): $(OBJECTS)# compile the target
-	$(CC) $? $(FLAGS) -o $@
+	$(CC) $^ $(FLAGS) -o $@
 	
 bin/%.o: src/%$(EXTENSION) $(INCLUDES) bin# create object file for %
 	$(CC) $< $(FLAGS) -c -o $@
