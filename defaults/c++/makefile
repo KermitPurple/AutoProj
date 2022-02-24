@@ -3,7 +3,7 @@ CC=clang# c compiler
 EXTENSION=.c# c extension
 TARGET=bin/test# the output file
 DBG_TARGET=$(TARGET).debug
-CFLAGS=-Wall -Iinclude -fsanitize=address# flags to be passed to compiler
+CFLAGS=-Wextra -Iinclude -fsanitize=address# flags to be passed to compiler
 LIBS=# librarys to link
 DBG_FLAGS=-g# flags for debugging
 DEBUGGER=lldb# debugger to use
