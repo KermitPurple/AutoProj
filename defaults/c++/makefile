@@ -13,12 +13,12 @@ test: $(TARGET)
 
 debug: CFLAGS+=-g
 debug: TARGET=bin/debug
-debug: clear $(TARGET)
+debug: clean $(TARGET)
 	$(DBGR) $(TARGET)
 
 release: CFLAGS+=-Ofast
 release: TARGET=bin/release
-release: clear $(TARGET)
+release: clean $(TARGET)
 
 $(TARGET): $(OBJ)
 	$(CXX) $(LIBS) $^ -o $(TARGET)
