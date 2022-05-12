@@ -13,8 +13,12 @@ test: $(TARGET)
 
 debug: CFLAGS+=-g
 debug: TARGET=bin/debug
-debug: $(TARGET)
+debug: clear $(TARGET)
 	$(DBGR) $(TARGET)
+
+release: CFLAGS+=-Ofast
+release: TARGET=bin/release
+release: clear $(TARGET)
 
 $(TARGET): $(OBJ)
 	$(CXX) $(LIBS) $^ -o $(TARGET)
@@ -32,4 +36,4 @@ bin:
 clean:
 	$(RM) bin
 
-.PHONY: all test debug clean
+.PHONY: all test debug release clean
