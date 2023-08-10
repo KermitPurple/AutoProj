@@ -72,7 +72,7 @@ def make_repo(name: str = None, whitelist: str = '*'):
         git commit -mInitial')
     if name:
         system(f'gh repo create {name} --public &&\
-            git remote add origin git@github.com:kermitpurple/{name} &&\
+            git remote add origin git@github.com:shanemcdo/{name} &&\
             git push --set-upstream origin main')
 
 def make_new_c(name: str):
